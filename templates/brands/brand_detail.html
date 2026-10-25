@@ -1,0 +1,111 @@
+
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ brand.name }} | SonicBench
+{% endblock %}
+
+{% block content %}
+
+<section class="page-section container">
+
+    <a href="{% url 'brands:brand_list' %}"
+       class="back-link">
+        ← Back to Brands
+    </a>
+
+    <div class="detail-card">
+
+        <div class="detail-header">
+
+            <div class="brand-image detail-logo">
+
+                {% if brand.logo_url %}
+                    <img
+                        src="{{ brand.logo_url }}"
+                        alt="{{ brand.name }} logo"
+                    >
+                {% else %}
+                    <span>
+                        {{ brand.name|first|upper }}
+                    </span>
+                {% endif %}
+
+            </div>
+
+            <div>
+                <p class="eyebrow">AUDIO MANUFACTURER</p>
+
+                <h1>{{ brand.name }}</h1>
+
+                <p class="brand-country">
+                    {{ brand.country }}
+                </p>
+            </div>
+
+        </div>
+
+        <div class="detail-body">
+
+            <h2>About the Brand</h2>
+
+            {% if brand.description %}
+                <p>
+                    {{ brand.description|linebreaksbr }}
+                </p>
+            {% else %}
+                <p>No description available.</p>
+            {% endif %}
+
+            {% if brand.website %}
+                <a
+                    href="{{ brand.website }}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="secondary-button">
+                    Official Website
+                </a>
+            {% endif %}
+
+        </div>
+
+        <div class="detail-body">
+
+            <h2>Speakers by {{ brand.name }}</h2>
+
+            {% for speaker in brand.speakers.all %}
+
+                <p>{{ speaker.name }}</p>
+
+            {% empty %}
+
+                <p>
+                    No speakers from this manufacturer
+                    have been added yet.
+                </p>
+
+            {% endfor %}
+
+        </div>
+
+        <div class="detail-actions">
+
+            <a
+                href="{% url 'brands:brand_edit' brand.pk %}"
+                class="secondary-button">
+                Edit Brand
+            </a>
+
+            <a
+                href="{% url 'brands:brand_delete' brand.pk %}"
+                class="danger-button">
+                Delete Brand
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

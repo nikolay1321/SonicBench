@@ -1,0 +1,103 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Audio Brands | SonicBench{% endblock %}
+
+{% block content %}
+
+<section class="page-section container">
+
+    <div class="page-heading">
+        <div>
+            <p class="eyebrow">AUDIO MANUFACTURERS</p>
+            <h1>Explore Audio Brands</h1>
+
+            <p class="page-description">
+                Discover the manufacturers behind
+                your favorite speakers.
+            </p>
+        </div>
+
+        <a href="{% url 'brands:brand_add' %}"
+           class="primary-button">
+            + Add Brand
+        </a>
+    </div>
+
+    {% if brands %}
+
+        <div class="brand-grid">
+
+            {% for brand in brands %}
+
+                <article class="brand-card">
+
+                    <div class="brand-image">
+
+                        {% if brand.logo_url %}
+                            <img
+                                src="{{ brand.logo_url }}"
+                                alt="{{ brand.name }} logo"
+                            >
+                        {% else %}
+                            <span>
+                                {{ brand.name|first|upper }}
+                            </span>
+                        {% endif %}
+
+                    </div>
+
+                    <div class="brand-content">
+
+                        <h2>{{ brand.name }}</h2>
+
+                        <p class="brand-country">
+                            {{ brand.country }}
+                        </p>
+
+                        <p class="brand-description">
+                            {{ brand.description|truncatewords:20 }}
+                        </p>
+
+                        <p class="brand-count">
+                            {{ brand.speakers.count }}
+                            speaker(s)
+                        </p>
+
+                        <a
+                            href="{% url 'brands:brand_detail' brand.pk %}"
+                            class="secondary-button">
+                            View Details
+                        </a>
+
+                    </div>
+
+                </article>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="empty-state">
+
+            <h2>No brands yet</h2>
+
+            <p>
+                Start building your audio catalog
+                by adding your first manufacturer.
+            </p>
+
+            <a href="{% url 'brands:brand_add' %}"
+               class="primary-button">
+                Add Your First Brand
+            </a>
+
+        </div>
+
+    {% endif %}
+
+</section>
+
+{% endblock %}

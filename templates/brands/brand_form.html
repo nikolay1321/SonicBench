@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {% if object %}Edit Brand{% else %}Add Brand{% endif %}
+    | SonicBench
+{% endblock %}
+
+{% block content %}
+
+<section class="page-section container">
+
+    <div class="form-container">
+
+        <div class="form-heading">
+
+            <p class="eyebrow">BRAND MANAGEMENT</p>
+
+            {% if object %}
+                <h1>Edit {{ object.name }}</h1>
+                <p>Update manufacturer information.</p>
+            {% else %}
+                <h1>Add a New Brand</h1>
+                <p> Add a speaker manufacturer to the SonicBench catalog.</p>
+            {% endif %}
+        </div>
+
+        <form method="post" class="styled-form">
+
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class="form-errors">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            {% for field in form %}
+                 <div class="form-group">
+
+                    {{ field.label_tag }}
+
+                     {{ field }}
+
+                     {% if field.help_text %}
+                        <small class="help-text">
+                            {{ field.help_text }}
+                        </small>
+                     {% endif %}
+
+                     {% if field.errors %}
+                        <div class="form-errors">
+                            {{ field.errors }}
+                        </div>
+                     {% endif %}
+
+                 </div>
+            {% endfor %}
+
+             <div class="form-actions">
+
+                <button type="submit"
+                        class="primary-button">
+
+                    {% if object %}
+                        Save Changes
+                    {% else %}
+                        Create Brand
+                    {% endif %}
+
+                </button>
+
+                  <a href="{% url 'brands:brand_list' %}"
+                   class="secondary-button">
+                    Cancel
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</section>
+
+{% endblock %}

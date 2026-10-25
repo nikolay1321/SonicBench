@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete Brand | SonicBench{% endblock %}
+
+{% block content %}
+
+
+<section class="page-section container">
+
+    <div class="delete-container">
+
+        <p class="eyebrow">DANGER ZONE</p>
+
+        <h1>Delete {{ object.name }}?</h1>
+
+        <p>
+            Are you sure you want to permanently
+            delete this manufacturer?
+        </p>
+
+        <p class="warning-text">
+            This action cannot be undone.
+        </p>
+
+        {% if form.non_field_errors %}
+            <div class="form-errors">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+
+         <form method="post">
+
+             {% csrf_token %}
+
+              <div class="form-actions">
+
+                <button type="submit"
+                        class="danger-button">
+                    Yes, Delete Brand
+                </button>
+
+                <a
+                    href="{% url 'brands:brand_detail' object.pk %}"
+                    class="secondary-button">
+                    Cancel
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</section>
+
+{% endblock %}
