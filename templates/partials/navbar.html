@@ -1,13 +1,36 @@
+
 <header class="site-header">
+
     <nav class="navbar container">
+
         <a class="brand-logo" href="{% url 'home' %}">
             SONIC<span>BENCH</span>
         </a>
 
         <div class="nav-links">
-            <a href="{% url 'home' %}">Home</a>
-            <a href="{% url 'brands:brand_list' %}">Brands</a>
-            <a href="{% url 'brands:brand_add' %}">Add Brand</a>
+
+            <a href="{% url 'home' %}">
+                Home
+            </a>
+
+            <a href="{% url 'brands:brand_list' %}">
+                Brands
+            </a>
+
+            <a href="{% url 'brands:brand_add' %}">
+                Add Brand
+            </a>
+
+            <a href="{% url 'speakers:speaker_list' %}">
+                Speakers
+            </a>
+
+            <a href="{% url 'speakers:speaker_add' %}">
+                Add Speaker
+            </a>
+
         </div>
+
     </nav>
+
 </header>

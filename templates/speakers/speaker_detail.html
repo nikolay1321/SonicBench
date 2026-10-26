@@ -1,0 +1,142 @@
+
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ speaker.name }} | SonicBench
+{% endblock %}
+
+{% block content %}
+
+<section class="page-section container">
+
+    <a href="{% url 'speakers:speaker_list' %}"
+       class="back-link">
+        ← Back to Speakers
+    </a>
+
+    <div class="detail-card">
+
+        <div class="speaker-detail-header">
+
+            <div class="speaker-detail-image">
+
+                {% if speaker.image_url %}
+
+                    <img
+                        src="{{ speaker.image_url }}"
+                        alt="{{ speaker.name }}"
+                    >
+
+                {% else %}
+
+                    <span class="speaker-placeholder">
+                        🔊
+                    </span>
+
+                {% endif %}
+
+            </div>
+
+            <div class="speaker-detail-info">
+
+                <p class="eyebrow">SPEAKER DETAILS</p>
+
+                <p class="speaker-brand">
+                    <a href="{% url 'brands:brand_detail' speaker.brand.pk %}">
+                        {{ speaker.brand.name }}
+                    </a>
+                </p>
+
+                <h1>{{ speaker.name }}</h1>
+
+                <p class="speaker-type">
+                    {{ speaker.get_speaker_type_display }}
+                </p>
+
+                <p class="speaker-detail-price">
+                    {{ speaker.price|floatformat:2 }}
+                </p>
+
+                <p class="page-description">
+                    {{ speaker.description|linebreaksbr }}
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="detail-body">
+
+            <h2>Technical Specifications</h2>
+
+            <div class="specifications-grid">
+
+                <div class="specification">
+                    <span>Manufacturer</span>
+                    <strong>{{ speaker.brand.name }}</strong>
+                </div>
+
+                <div class="specification">
+                    <span>Speaker Type</span>
+                    <strong>
+                        {{ speaker.get_speaker_type_display }}
+                    </strong>
+                </div>
+
+                <div class="specification">
+                    <span>RMS Power</span>
+                    <strong>{{ speaker.power_rms }} W</strong>
+                </div>
+
+                <div class="specification">
+                    <span>Frequency Response</span>
+                    <strong>
+                        {{ speaker.frequency_min }} -
+                        {{ speaker.frequency_max }} Hz
+                    </strong>
+                </div>
+
+                <div class="specification">
+                    <span>Wireless Connectivity</span>
+
+                    <strong>
+                        {% if speaker.is_wireless %}
+                            Yes
+                        {% else %}
+                            No
+                        {% endif %}
+                    </strong>
+                </div>
+
+                <div class="specification">
+                    <span>Added On</span>
+                    <strong>
+                        {{ speaker.created_at|date:"d M Y" }}
+                    </strong>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="detail-actions">
+
+            <a
+                href="{% url 'speakers:speaker_edit' speaker.pk %}"
+                class="secondary-button">
+                Edit Speaker
+            </a>
+
+            <a
+                href="{% url 'speakers:speaker_delete' speaker.pk %}"
+                class="danger-button">
+                Delete Speaker
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

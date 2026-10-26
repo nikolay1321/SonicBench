@@ -1,0 +1,207 @@
+{% extends 'base.html' %}
+
+{% block title %}Speaker Catalog | SonicBench{% endblock %}
+
+{% block content %}
+
+<section class="page-section container">
+
+    <div class="page-heading">
+        <div>
+            <p class="eyebrow">EXPLORE SOUND</p>
+
+            <h1>Speaker Catalog</h1>
+
+            <p class="page-description">
+                Discover speakers, compare specifications,
+                and find your ideal sound.
+            </p>
+        </div>
+
+        <a href="{% url 'speakers:speaker_add' %}"
+           class="primary-button">
+            + Add Speaker
+        </a>
+    </div>
+
+     <form method="get" class="catalog-filters">
+
+        <input
+            type="text"
+            name="q"
+            value="{{ search_query }}"
+            placeholder="Search by speaker or brand..."
+            class="form-input"
+        >
+
+        <select name="sort" class="form-input">
+
+    {% if current_sort == 'newest' %}
+        <option value="newest" selected>Newest First</option>
+    {% else %}
+        <option value="newest">Newest First</option>
+    {% endif %}
+
+    {% if current_sort == 'price_low' %}
+        <option value="price_low" selected>Price: Low to High</option>
+    {% else %}
+        <option value="price_low">Price: Low to High</option>
+    {% endif %}
+
+    {% if current_sort == 'price_high' %}
+        <option value="price_high" selected>Price: High to Low</option>
+    {% else %}
+        <option value="price_high">Price: High to Low</option>
+    {% endif %}
+
+    {% if current_sort == 'name' %}
+        <option value="name" selected>Name: A to Z</option>
+    {% else %}
+        <option value="name">Name: A to Z</option>
+    {% endif %}
+
+</select>
+
+        <button type="submit" class="primary-button">
+            Search
+        </button>
+
+        <a href="{% url 'speakers:speaker_list' %}"
+           class="secondary-button">
+            Clear
+        </a>
+
+    </form>
+
+    {% if speakers %}
+
+        <div class="speaker-grid">
+
+            {% for speaker in speakers %}
+
+                <article class="speaker-card">
+
+                    <div class="speaker-image">
+
+                        {% if speaker.image_url %}
+
+                            <img
+                                src="{{ speaker.image_url }}"
+                                alt="{{ speaker.brand.name }} {{ speaker.name }}"
+                                loading="lazy"
+                            >
+
+                        {% else %}
+
+                            <span class="speaker-placeholder">
+                                🔊
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+                    <div class="speaker-content">
+
+                        <p class="speaker-brand">
+                            {{ speaker.brand.name }}
+                        </p>
+
+                        <h2>{{ speaker.name }}</h2>
+
+                        <p class="speaker-type">
+                            {{ speaker.get_speaker_type_display }}
+                        </p>
+
+                        <div class="speaker-specs">
+
+                            <span>
+                                {{ speaker.power_rms }} W RMS
+                            </span>
+
+                            <span>
+                                {{ speaker.frequency_min }} -
+                                {{ speaker.frequency_max }} Hz
+                            </span>
+
+                        </div>
+
+                        <div class="speaker-bottom">
+
+                            <span class="speaker-price">
+                                {{ speaker.price|floatformat:2 }}
+                            </span>
+
+                            <a
+                                href="{% url 'speakers:speaker_detail' speaker.pk %}"
+                                class="secondary-button">
+                                Details
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="empty-state">
+
+            <h2>No speakers found</h2>
+
+            <p>
+                There are no speakers matching
+                your search, or the catalog is empty.
+            </p>
+
+            <a href="{% url 'speakers:speaker_add' %}"
+               class="primary-button">
+                Add a Speaker
+            </a>
+
+        </div>
+
+    {% endif %}
+
+
+
+    {% if is_paginated %}
+
+        <div class="pagination">
+
+            {% if page_obj.has_previous %}
+
+                <a href="?page={{ page_obj.previous_page_number }}&amp;q={{ search_query|urlencode }}&amp;sort={{ current_sort|urlencode }}"
+                   class="secondary-button">
+                    Previous
+                </a>
+
+            {% endif %}
+
+            <span class="page-number">
+                Page {{ page_obj.number }}
+                of {{ page_obj.paginator.num_pages }}
+            </span>
+
+            {% if page_obj.has_next %}
+
+                <a href="?page={{ page_obj.next_page_number }}&amp;q={{ search_query|urlencode }}&amp;sort={{ current_sort|urlencode }}"
+                   class="secondary-button">
+                    Next
+                </a>
+
+            {% endif %}
+
+        </div>
+
+    {% endif %}
+
+</section>
+
+{% endblock %}
+

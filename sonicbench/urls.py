@@ -25,4 +25,9 @@ urlpatterns = [
         "brands/",
         include("brands.urls"),
     ),
+
+    path(
+        "speakers/",
+        include("speakers.urls"),
+    ),
 ]

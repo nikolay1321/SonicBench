@@ -69,24 +69,30 @@
 
         </div>
 
-        <div class="detail-body">
 
-            <h2>Speakers by {{ brand.name }}</h2>
+<div class="detail-body">
 
-            {% for speaker in brand.speakers.all %}
+    <h2>Speakers by {{ brand.name }}</h2>
 
-                <p>{{ speaker.name }}</p>
+    {% for speaker in brand.speakers.all %}
 
-            {% empty %}
+        <p>
+            <a href="{% url 'speakers:speaker_detail' speaker.pk %}">
+                {{ speaker.name }}
+            </a>
+        </p>
 
-                <p>
-                    No speakers from this manufacturer
-                    have been added yet.
-                </p>
+    {% empty %}
 
-            {% endfor %}
+        <p>
+            No speakers from this manufacturer
+            have been added yet.
+        </p>
 
-        </div>
+    {% endfor %}
+
+</div>
+
 
         <div class="detail-actions">
 

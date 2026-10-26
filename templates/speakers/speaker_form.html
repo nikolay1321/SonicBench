@@ -1,0 +1,111 @@
+
+{% extends 'base.html' %}
+
+{% block title %}
+    {% if object %}
+        Edit Speaker
+    {% else %}
+        Add Speaker
+    {% endif %}
+    | SonicBench
+{% endblock %}
+
+{% block content %}
+
+<section class="page-section container">
+
+    <div class="form-container">
+
+        <div class="form-heading">
+
+            <p class="eyebrow">SPEAKER MANAGEMENT</p>
+
+            {% if object %}
+
+                <h1>Edit {{ object.name }}</h1>
+
+                <p>
+                    Update the speaker's technical
+                    specifications and information.
+                </p>
+
+            {% else %}
+
+                <h1>Add a New Speaker</h1>
+
+                <p>
+                    Add a new speaker to the
+                    SonicBench audio catalog.
+                </p>
+
+            {% endif %}
+
+        </div>
+
+        <form method="post" class="styled-form">
+
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+
+                <div class="form-errors">
+                    {{ form.non_field_errors }}
+                </div>
+
+            {% endif %}
+
+            {% for field in form %}
+
+                <div class="form-group">
+
+                    {{ field.label_tag }}
+
+                    {{ field }}
+
+                    {% if field.help_text %}
+
+                        <small class="help-text">
+                            {{ field.help_text }}
+                        </small>
+
+                    {% endif %}
+
+                    {% if field.errors %}
+
+                        <div class="field-errors">
+                            {{ field.errors }}
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+            {% endfor %}
+
+            <div class="form-actions">
+
+                <button type="submit"
+                        class="primary-button">
+
+                    {% if object %}
+                        Save Changes
+                    {% else %}
+                        Create Speaker
+                    {% endif %}
+
+                </button>
+
+                <a href="{% url 'speakers:speaker_list' %}"
+                   class="secondary-button">
+                    Cancel
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</section>
+
+{% endblock %}
