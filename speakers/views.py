@@ -30,7 +30,7 @@ class SpeakerListView(ListView):
         if search_query:
             queryset = queryset.filter(
                 Q(name__icontains=search_query)
-                | Q(brand_name__icontains=search_query)
+                | Q(brand__name__icontains=search_query)
             )
 
         sorting_options = {

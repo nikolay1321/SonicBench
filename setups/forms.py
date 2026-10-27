@@ -60,7 +60,7 @@ class RoomForm(forms.ModelForm):
         area = self.cleaned_data['area_sqm']
 
         if area > Decimal("1000.00"):
-            raise forms.ValidationError("Room are cannot exceed 1000 square meters.")
+            raise forms.ValidationError("Room area cannot exceed 1000 square meters.")
 
         return area
 
