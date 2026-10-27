@@ -1,4 +1,3 @@
-from django.db import models
 from decimal import Decimal
 from django.core.validators import MinLengthValidator, MinValueValidator
 from django.db import models
@@ -20,7 +19,12 @@ class Room(models.Model):
         ],
     )
 
-    room_type = models.DecimalField(
+    room_type = models.CharField(
+        max_length=20,
+        choices=RoomType.choices,
+    )
+
+    area_sqm = models.DecimalField(
         max_digits=6,
         decimal_places=2,
         validators=[

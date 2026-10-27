@@ -1,0 +1,155 @@
+
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ setup.name }} | SonicBench
+{% endblock %}
+
+{% block content %}
+
+<section class="page-section container">
+
+    <a href="{% url 'setups:setup_list' %}"
+       class="back-link">
+        ← Back to Listening Setups
+    </a>
+
+    <div class="detail-card">
+
+        <div class="detail-header">
+
+            <div>
+                <p class="eyebrow">AUDIO CONFIGURATION</p>
+
+                <h1>{{ setup.name }}</h1>
+
+                <p class="brand-country">
+                    {{ setup.get_purpose_display }}
+                </p>
+            </div>
+
+        </div>
+
+        <div class="detail-body">
+
+            <h2>Setup Information</h2>
+
+            <div class="specifications-grid">
+
+                <div class="specification">
+                    <span>Listening Room</span>
+
+                    <strong>
+                        <a href="{% url 'setups:room_detail' setup.room.pk %}">
+                            {{ setup.room.name }}
+                        </a>
+                    </strong>
+                </div>
+
+                <div class="specification">
+                    <span>Setup Purpose</span>
+
+                    <strong>
+                        {{ setup.get_purpose_display }}
+                    </strong>
+                </div>
+
+                <div class="specification">
+                    <span>Total Speaker Models</span>
+
+                    <strong>
+                        {{ setup.speakers.count }}
+                    </strong>
+                </div>
+
+                <div class="specification">
+                    <span>Created On</span>
+
+                    <strong>
+                        {{ setup.created_at|date:"d M Y" }}
+                    </strong>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="detail-body">
+
+            <h2>Speakers in This Setup</h2>
+
+            <div class="setup-speakers">
+
+                {% for speaker in setup.speakers.all %}
+
+                    <div class="setup-speaker">
+
+                        <p class="speaker-brand">
+                            {{ speaker.brand.name }}
+                        </p>
+
+                        <h3>{{ speaker.name }}</h3>
+
+                        <p>
+                            {{ speaker.power_rms }} W RMS
+                        </p>
+
+                        <p>
+                            {{ speaker.frequency_min }} -
+                            {{ speaker.frequency_max }} Hz
+                        </p>
+
+                        <a
+                            href="{% url 'speakers:speaker_detail' speaker.pk %}"
+                            class="secondary-button">
+                            View Speaker
+                        </a>
+
+                    </div>
+
+                {% empty %}
+
+                    <p>
+                        No speakers have been assigned
+                        to this setup.
+                    </p>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+        <div class="detail-body">
+
+            <h2>Additional Notes</h2>
+
+            {% if setup.notes %}
+                <p>{{ setup.notes|linebreaksbr }}</p>
+            {% else %}
+                <p>No additional notes.</p>
+            {% endif %}
+
+        </div>
+
+        <div class="detail-actions">
+
+            <a
+                href="{% url 'setups:setup_edit' setup.pk %}"
+                class="secondary-button">
+                Edit Setup
+            </a>
+
+            <a
+                href="{% url 'setups:setup_delete' setup.pk %}"
+                class="danger-button">
+                Delete Setup
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

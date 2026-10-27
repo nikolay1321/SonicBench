@@ -802,3 +802,68 @@ textarea.form-input {
         flex-wrap: wrap;
     }
 }
+
+
+/* Listening Setups */
+
+.setup-speakers {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.setup-speaker {
+    background: #10141c;
+    border: 1px solid #292d35;
+    border-radius: 10px;
+    padding: 25px;
+}
+
+.setup-speaker h3 {
+    font-size: 22px;
+    margin-bottom: 15px;
+}
+
+.setup-speaker p {
+    color: var(--muted);
+    margin-bottom: 12px;
+}
+
+.setup-speaker .speaker-brand {
+    color: var(--accent);
+}
+
+.setup-speaker .secondary-button {
+    margin-top: 12px;
+}
+
+.setup-help {
+    margin-top: 25px;
+    text-align: center;
+}
+
+.setup-help p {
+    color: var(--muted);
+    margin-bottom: 12px;
+}
+
+.setup-help a {
+    color: var(--accent);
+    margin: 0 12px;
+}
+
+.form-group select[multiple] {
+    min-height: 160px;
+    padding: 10px;
+}
+
+.form-group select[multiple] option {
+    padding: 10px;
+}
+
+@media (max-width: 700px) {
+    .setup-speakers {
+        grid-template-columns: 1fr;
+    }
+}
+

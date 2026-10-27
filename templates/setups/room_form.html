@@ -1,0 +1,79 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Add Room | SonicBench{% endblock %}
+
+{% block content %}
+
+<section class="page-section container">
+
+    <div class="form-container">
+
+        <div class="form-heading">
+
+            <p class="eyebrow">ROOM MANAGEMENT</p>
+
+            <h1>Create a Listening Room</h1>
+
+            <p>
+                Tell us about the space where
+                your sound system will be installed.
+            </p>
+
+        </div>
+
+        <form method="post" class="styled-form">
+
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class="form-errors">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            {% for field in form %}
+
+                <div class="form-group">
+
+                    {{ field.label_tag }}
+
+                    {{ field }}
+
+                    {% if field.help_text %}
+                        <small class="help-text">
+                            {{ field.help_text }}
+                        </small>
+                    {% endif %}
+
+                    {% if field.errors %}
+                        <div class="field-errors">
+                            {{ field.errors }}
+                        </div>
+                    {% endif %}
+
+                </div>
+
+            {% endfor %}
+
+            <div class="form-actions">
+
+                <button type="submit"
+                        class="primary-button">
+                    Create Room
+                </button>
+
+                <a href="{% url 'setups:room_list' %}"
+                   class="secondary-button">
+                    Cancel
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,94 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Listening Setups | SonicBench{% endblock %}
+
+{% block content %}
+
+<section class="page-section container">
+
+    <div class="page-heading">
+
+        <div>
+            <p class="eyebrow">YOUR AUDIO SYSTEMS</p>
+
+            <h1>Listening Setups</h1>
+
+            <p class="page-description">
+                Build and organize your own sound systems.
+            </p>
+        </div>
+
+        <a href="{% url 'setups:setup_add' %}"
+           class="primary-button">
+            + Create Setup
+        </a>
+
+    </div>
+
+    {% if setups %}
+
+        <div class="brand-grid">
+
+            {% for setup in setups %}
+
+                <article class="brand-card">
+
+                    <div class="brand-content">
+
+                        <p class="eyebrow">
+                            {{ setup.get_purpose_display }}
+                        </p>
+
+                        <h2>{{ setup.name }}</h2>
+
+                        <p class="brand-country">
+                            Room: {{ setup.room.name }}
+                        </p>
+
+                        <p class="brand-description">
+                            {{ setup.notes|truncatewords:20 }}
+                        </p>
+
+                        <p class="brand-count">
+                            {{ setup.speakers.count }}
+                            speaker(s)
+                        </p>
+
+                        <a
+                            href="{% url 'setups:setup_detail' setup.pk %}"
+                            class="secondary-button">
+                            View Setup
+                        </a>
+
+                    </div>
+
+                </article>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="empty-state">
+
+            <h2>No listening setups yet</h2>
+
+            <p>
+                Create your first sound system
+                by combining speakers in a room.
+            </p>
+
+            <a href="{% url 'setups:setup_add' %}"
+               class="primary-button">
+                Create Your First Setup
+            </a>
+
+        </div>
+
+    {% endif %}
+
+</section>
+
+{% endblock %}

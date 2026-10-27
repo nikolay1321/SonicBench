@@ -1,0 +1,90 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Listening Rooms | SonicBench{% endblock %}
+
+{% block content %}
+
+<section class="page-section container">
+
+    <div class="page-heading">
+
+        <div>
+            <p class="eyebrow">YOUR LISTENING SPACES</p>
+
+            <h1>Listening Rooms</h1>
+
+            <p class="page-description">
+                Organize the rooms where you enjoy
+                your favorite audio equipment.
+            </p>
+        </div>
+
+        <a href="{% url 'setups:room_add' %}"
+           class="primary-button">
+            + Add Room
+        </a>
+
+    </div>
+
+    {% if rooms %}
+
+        <div class="brand-grid">
+
+            {% for room in rooms %}
+
+                <article class="brand-card">
+
+                    <div class="brand-content">
+
+                        <p class="eyebrow">
+                            {{ room.get_room_type_display }}
+                        </p>
+
+                        <h2>{{ room.name }}</h2>
+
+                        <p class="brand-description">
+                            {{ room.description|truncatewords:20 }}
+                        </p>
+
+                        <p class="brand-country">
+                            {{ room.area_sqm }} m²
+                        </p>
+
+                        <a
+                            href="{% url 'setups:room_detail' room.pk %}"
+                            class="secondary-button">
+                            View Room
+                        </a>
+
+                    </div>
+
+                </article>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="empty-state">
+
+            <h2>No listening rooms yet</h2>
+
+            <p>
+                Create your first room to start
+                organizing your sound systems.
+            </p>
+
+            <a href="{% url 'setups:room_add' %}"
+               class="primary-button">
+                Create Your First Room
+            </a>
+
+        </div>
+
+    {% endif %}
+
+</section>
+
+{% endblock %}

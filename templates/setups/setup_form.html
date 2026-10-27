@@ -1,0 +1,113 @@
+
+{% extends 'base.html' %}
+
+{% block title %}
+    {% if object %}Edit Setup{% else %}Create Setup{% endif %}
+    | SonicBench
+{% endblock %}
+
+{% block content %}
+
+<section class="page-section container">
+
+    <div class="form-container">
+
+        <div class="form-heading">
+
+            <p class="eyebrow">SOUND SYSTEM BUILDER</p>
+
+            {% if object %}
+
+                <h1>Edit {{ object.name }}</h1>
+
+                <p>
+                    Modify the speakers and settings
+                    of your listening setup.
+                </p>
+
+            {% else %}
+
+                <h1>Create a Listening Setup</h1>
+
+                <p>
+                    Choose a room and combine your
+                    favorite speakers into a sound system.
+                </p>
+
+            {% endif %}
+
+        </div>
+
+        <form method="post" class="styled-form">
+
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class="form-errors">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            {% for field in form %}
+
+                <div class="form-group">
+
+                    {{ field.label_tag }}
+
+                    {{ field }}
+
+                    {% if field.help_text %}
+                        <small class="help-text">
+                            {{ field.help_text }}
+                        </small>
+                    {% endif %}
+
+                    {% if field.errors %}
+                        <div class="field-errors">
+                            {{ field.errors }}
+                        </div>
+                    {% endif %}
+
+                </div>
+
+            {% endfor %}
+
+            <div class="form-actions">
+
+                <button type="submit"
+                        class="primary-button">
+
+                    {% if object %}
+                        Save Changes
+                    {% else %}
+                        Create Setup
+                    {% endif %}
+
+                </button>
+
+                <a href="{% url 'setups:setup_list' %}"
+                   class="secondary-button">
+                    Cancel
+                </a>
+
+            </div>
+
+        </form>
+
+        <div class="setup-help">
+            <p>Need to add more equipment first?</p>
+
+            <a href="{% url 'speakers:speaker_add' %}">
+                Add a Speaker
+            </a>
+
+            <a href="{% url 'setups:room_add' %}">
+                Add a Room
+            </a>
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

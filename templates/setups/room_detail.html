@@ -1,0 +1,94 @@
+
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ room.name }} | SonicBench
+{% endblock %}
+
+{% block content %}
+
+<section class="page-section container">
+
+    <a href="{% url 'setups:room_list' %}"
+       class="back-link">
+        ← Back to Rooms
+    </a>
+
+    <div class="detail-card">
+
+        <div class="detail-header">
+
+            <div>
+                <p class="eyebrow">LISTENING ROOM</p>
+
+                <h1>{{ room.name }}</h1>
+
+                <p class="brand-country">
+                    {{ room.get_room_type_display }}
+                </p>
+            </div>
+
+        </div>
+
+        <div class="detail-body">
+
+            <h2>Room Information</h2>
+
+            <div class="specifications-grid">
+
+                <div class="specification">
+                    <span>Room Type</span>
+                    <strong>
+                        {{ room.get_room_type_display }}
+                    </strong>
+                </div>
+
+                <div class="specification">
+                    <span>Room Area</span>
+                    <strong>{{ room.area_sqm }} m²</strong>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="detail-body">
+
+            <h2>Description</h2>
+
+            {% if room.description %}
+                <p>{{ room.description|linebreaksbr }}</p>
+            {% else %}
+                <p>No description available.</p>
+            {% endif %}
+
+        </div>
+
+        <div class="detail-body">
+
+            <h2>Listening Setups</h2>
+
+            {% for setup in room.listening_setups.all %}
+
+                <p>
+                    <a href="{% url 'setups:setup_detail' setup.pk %}">
+                        {{ setup.name }}
+                    </a>
+                </p>
+
+            {% empty %}
+
+                <p>
+                    There are no listening setups
+                    assigned to this room yet.
+                </p>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

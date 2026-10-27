@@ -30,4 +30,9 @@ urlpatterns = [
         "speakers/",
         include("speakers.urls"),
     ),
+
+    path(
+        "",
+        include("setups.urls"),
+    ),
 ]
