@@ -1,0 +1,32 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Page Not Found | SonicBench{% endblock %}
+
+{% block content %}
+
+<section class="error-page container">
+
+    <div class="error-content">
+
+        <p class="eyebrow">SIGNAL LOST</p>
+
+        <h1 class="error-code">404</h1>
+
+        <h2>Oops! This frequency doesn't exist.</h2>
+
+        <p class="error-description">
+            Looks like you've tuned into the wrong frequency.
+            The page you're looking for may have been moved,
+            deleted, or never existed.
+        </p>
+
+        <a href="{% url 'home' %}" class="primary-button">
+            Return to Homepage
+        </a>
+
+    </div>
+
+</section>
+
+{% endblock %}

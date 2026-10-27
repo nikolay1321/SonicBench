@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load speaker_extras %}
+
 {% block title %}Home | SonicBench{% endblock %}
 
 {% block content %}
@@ -63,6 +65,110 @@
         </article>
 
     </div>
+
+</section>
+
+<section class="page-section container">
+
+    <div class="page-heading">
+        <div>
+            <p class="eyebrow">FRESH FROM THE CATALOG</p>
+
+            <h2>Recently Added Speakers</h2>
+
+            {% total_speakers as speaker_count %}
+
+            <p class="page-description">
+                Explore our collection of
+                {{ speaker_count }} speaker models.
+            </p>
+        </div>
+
+        <a href="{% url 'speakers:speaker_list' %}"
+           class="primary-button">
+            View All Speakers
+        </a>
+    </div>
+
+    {% if latest_speakers %}
+
+        <div class="speaker-grid">
+
+            {% for speaker in latest_speakers %}
+
+                <article class="speaker-card">
+
+                    <div class="speaker-image">
+
+                        {% if speaker.image_url %}
+                            <img
+                                src="{{ speaker.image_url }}"
+                                alt="{{ speaker.name }}"
+                            >
+                        {% else %}
+                            <span class="speaker-placeholder">
+                                🔊
+                            </span>
+                        {% endif %}
+
+                    </div>
+
+                    <div class="speaker-content">
+
+                        <p class="speaker-brand">
+                            {{ speaker.brand.name }}
+                        </p>
+
+                        <h2>{{ speaker.name }}</h2>
+
+                        <p class="speaker-type">
+                            {{ speaker.get_speaker_type_display }}
+                        </p>
+
+                        <div class="speaker-specs">
+                            <span>
+                                {{ speaker.power_rms|rms_power }}
+                            </span>
+                        </div>
+
+                        <div class="speaker-bottom">
+                            <span class="speaker-price">
+                                {{ speaker.price|floatformat:2 }}
+                            </span>
+
+                            <a href="{% url 'speakers:speaker_detail' speaker.pk %}"
+                               class="secondary-button">
+                                Details
+                            </a>
+                        </div>
+
+                    </div>
+
+                </article>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="empty-state">
+
+            <h2>No speakers added yet</h2>
+
+            <p>
+                Start building the catalog by adding
+                your first speaker.
+            </p>
+
+            <a href="{% url 'speakers:speaker_add' %}"
+               class="primary-button">
+                Add a Speaker
+            </a>
+
+        </div>
+
+    {% endif %}
 
 </section>
 

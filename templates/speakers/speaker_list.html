@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load speaker_extras %}
+
 {% block title %}Speaker Catalog | SonicBench{% endblock %}
 
 {% block content %}
@@ -116,7 +118,7 @@
                         <div class="speaker-specs">
 
                             <span>
-                                {{ speaker.power_rms }} W RMS
+                                {{ speaker.power_rms|rms_power }}
                             </span>
 
                             <span>

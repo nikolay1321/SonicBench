@@ -9,7 +9,11 @@ from .forms import SpeakerForm, SpeakerEditForm
 # Create your views here.
 
 def home(request):
-    return render(request, "home.html")
+    latest_speakers = (
+        Speaker.objects.select_related("brand").order_by("-created_at")[:3]
+    )
+
+    return render(request, "home.html", {"latest_speakers": latest_speakers,},)
 
 class SpeakerListView(ListView):
     model = Speaker
